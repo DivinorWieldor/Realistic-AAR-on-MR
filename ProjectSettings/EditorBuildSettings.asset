@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes 1/3m_2building-Roof.unity
+    guid: 4fe42a324609cab40b67f46306d65d81
+  m_configObjects:
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: fc33cacb816c795409d708ba33846fed,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 5fac1bfd048d0574d977c08d46c8f046,
+      type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: d2734d7c908ac9c4b8d192d3b563ae2b,
+      type: 2}
