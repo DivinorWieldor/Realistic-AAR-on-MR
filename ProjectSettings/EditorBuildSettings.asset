@@ -5,9 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes 1/3m_2building-Roof.unity
     guid: 4fe42a324609cab40b67f46306d65d81
+  - enabled: 0
+    path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Experimental - SceneUnderstanding/Scenes/SceneUnderstandingExample.unity
+    guid: d42a352dc9a8c4d4990a924687759199
+  - enabled: 1
+    path: Assets/Scenes 1/FENS-2.unity
+    guid: cc15df758f65a524b9cebe8ac333af49
   m_configObjects:
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: fc33cacb816c795409d708ba33846fed,
       type: 2}

@@ -23,10 +23,10 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 0
-  maxOcclusionSamples: 16
-  realTimeRays: 4096
-  realTimeBounces: 4
-  realTimeDuration: 1
+  maxOcclusionSamples: 32
+  realTimeRays: 32768
+  realTimeBounces: 32
+  realTimeDuration: 1.5
   realTimeAmbisonicOrder: 1
   realTimeMaxSources: 32
   realTimeCPUCoresPercentage: 5

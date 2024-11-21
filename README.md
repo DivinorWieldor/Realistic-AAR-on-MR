@@ -4,7 +4,9 @@ This project is conducted in conjunction with my Masters Project at Sabanci Univ
 
 # Usage
 
-The project is aimed to be run on a Hololens 2 device, due to its strong Mixed Reality capabilities (there is a promising aspect of running this also on Meta Orion glasses but don't hold your breath for it). Due to compatibility issues between Hololens and steam-audio, the project needs to be run with holographic projection. This way, the image is rendered on a PC, which is supported by steam-audio, and streamed to the Hololens device.
+The project is aimed to be run on a Hololens 2 device, due to its strong Mixed Reality capabilities (there is a promising aspect of running this also on Meta Orion glasses but don't hold your breath for it).
+
+Due to compatibility issues between Hololens and steam-audio, the project needs to be run with holographic projection. This way, the image is rendered on a PC, which is supported by steam-audio, and streamed to the Hololens device.
 
 # Aim
 
