@@ -14,6 +14,24 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &-6076974430019261239
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 77c3f942132980a408bc2c2aa5474764
+  m_EffectName: Lowpass
+  m_MixLevel: b6487a4a606c1b34bb119bae0a5dd406
+  m_Parameters:
+  - m_ParameterName: Cutoff freq
+    m_GUID: 16f4046b982ee844a9ed8281b2cf4b93
+  - m_ParameterName: Resonance
+    m_GUID: 0b1b85dccefc438409515ce660770ae3
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 1
 --- !u!244 &-4908387760090175377
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -100,7 +118,11 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 9059c5f1457f2554c939581cac7c27df
+    name: AttenVolume
+  - guid: a5b85ed7b4b8e524e9d732939ff8c578
+    name: MasterPitch
   m_AudioMixerGroupViews:
   - guids:
     - a6fdd6b86157cea4088ff5bcaa9b5440
@@ -126,6 +148,7 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 24400004}
+  - {fileID: -6076974430019261239}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -153,7 +176,13 @@ AudioMixerSnapshotController:
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: d04bb3dc2bd98af458138f7d3acaa254
-  m_FloatValues: {}
+  m_FloatValues:
+    ed603ea03db837641b4d87cd1085bcee: -0.08374829
+    4d761501a976fa34080dbd1db81f2236: 1
+    9059c5f1457f2554c939581cac7c27df: 0
+    b9cbbef6030a1c5499f6aa6ddb2fd312: 2209
+    a5b85ed7b4b8e524e9d732939ff8c578: 1.05
+    f9be527e2ea224148a030ad147c30afd: -10
   m_TransitionOverrides: {}
 --- !u!244 &909672494621289228
 AudioMixerEffectController:
