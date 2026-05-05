@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SourceToggle : MonoBehaviour
 {
+    //decrease volume when player close
 
     private void OnTriggerEnter(Collider other)
     {

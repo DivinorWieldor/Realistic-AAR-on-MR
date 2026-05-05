@@ -1,22 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Audio;
 
-public class soundModulation : MonoBehaviour
+public class soundModulationPath : MonoBehaviour
 {
-    GameObject player; // the dynamic object we are tracking
+    private GameObject player; // the dynamic object we are tracking
     private float minLowPass = -10; // the lowest the audio will be modulated to
     private Vector3 soundPos; // the position of the items this is attached to
     public AudioMixer audioMixer; // the audio mixer we are modulating
 
-    private RaycastHit hit;
+    [SerializeField]
+    private LineRenderer Path;
+    [SerializeField]
+    private float PathHeightOffset = 1.25f;
+    [SerializeField]
+    private float PathUpdateSpeed = 0.25f;
+
+    private NavMeshTriangulation Triangulation;
+    private Coroutine DrawPathCoroutine;
 
     // Start is called before the first frame update
     void Start()
     {
+        Triangulation = NavMesh.CalculateTriangulation();
         soundPos = transform.position;
         player = GameObject.FindWithTag("MainCamera");
+
+        if(DrawPathCoroutine != null)
+            StopCoroutine(DrawPathCoroutine);
+
+        DrawPathCoroutine = StartCoroutine(DrawPathToSound());
+    }
+
+    private IEnumerator DrawPathToSound()
+    {
+        WaitForSeconds wait = new WaitForSeconds(PathUpdateSpeed);
+        NavMeshPath path = new NavMeshPath();
+
+        while(true)
+        {
+            if(NavMesh.CalculatePath(player.transform.position, transform.position, NavMesh.AllAreas, path))
+            {
+                Path.positionCount = path.corners.Length;
+                for (int i = 0; i < path.corners.Length; i++)
+                    Path.SetPosition(i, path.corners[i] + Vector3.up * PathHeightOffset);
+            }
+            else
+                Debug.LogWarning("Failed to calculate path from player to sound source.");
+
+            yield return wait;
+        }
     }
 
     // Update is called once per frame
@@ -24,36 +59,9 @@ public class soundModulation : MonoBehaviour
     {
         if (player != null)
         {
-            /* This section modulates the sound if it has a direct sight to the player. If behind the player, sound is dampened to enhance the head occlusion effect */
-            Vector3 direction = player.transform.position - soundPos;
-            Ray ray = new Ray(soundPos, direction);
-
-            // check if there is a direct line of sight between player and sound source
-            if (Physics.Raycast(ray, out hit, direction.magnitude)) {
-                /*float currentAttenVolume; // if we don't want the audio to jump but lerp instead
-                audioMixer.GetFloat("AttenVolume", out currentAttenVolume);*/
-
-                if (hit.collider.gameObject == player) 
-                {
-                    /*float targetVal = CalculateLowPass(player);
-                    audioMixer.SetFloat("AttenVolume", Mathf.Lerp(currentAttenVolume, targetVal, 0.01f));*/
-                    audioMixer.SetFloat("AttenVolume", CalculateLowPass(player));
-                }
-                else // lerp from current AttenVolume towards 0
-                {
-                    /*if (currentAttenVolume < 0)
-                        audioMixer.SetFloat("AttenVolume", Mathf.Lerp(currentAttenVolume, 0, 0.001f));*/
-                    audioMixer.SetFloat("AttenVolume", 0);
-
-                    /* A major issue with lerping directly is that the user may think it's their fault
-                     * If so, they will think that they moved around too much and might get the wrong idea
-                     * So it needs to be clear to them that the change happened because of something on the
-                     * system's end, not theirs.
-                     * And so, if the audio has a perceivable jump, then the user will be more likely to
-                     * associate the change with the system, not themselves.
-                     */
-                }
-            }
+            /* modulates the sound if it has a direct sight to the player. If behind the player, sound is dampened to enhance the head occlusion effect */
+            audioMixer.SetFloat("AttenVolume", CalculateLowPass_path(player, Path));
+            
 
             /* This section modulates the sound based on player height. If behind the player is at a low elevation, sound is high pitched to show it is above */
             // TODO: Should we even implement this? We already know up-down is hard to perceive? This test just measures navigational performance?
@@ -69,9 +77,10 @@ public class soundModulation : MonoBehaviour
         }
     }
 
-    float CalculateLowPass(GameObject object1)
+    float CalculateLowPass_path(GameObject object1, LineRenderer Path)
     {
-        Vector3 directionToPlayer = transform.position - object1.transform.position;
+        Vector3 targetPos = Path.GetPosition(1);
+        Vector3 directionToPlayer = targetPos - object1.transform.position;
         Vector3 forward = object1.transform.forward;
 
         float azimuthAngle = Vector3.SignedAngle(forward, directionToPlayer, Vector3.up);

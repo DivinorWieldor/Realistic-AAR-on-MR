@@ -26,7 +26,7 @@ MonoBehaviour:
   maxOcclusionSamples: 32
   realTimeRays: 65536
   realTimeBounces: 64
-  realTimeDuration: 1.5
+  realTimeDuration: 2.5
   realTimeAmbisonicOrder: 1
   realTimeMaxSources: 32
   realTimeCPUCoresPercentage: 5
