@@ -7,9 +7,10 @@ using UnityEngine.Audio;
 public class soundModulationPath : MonoBehaviour
 {
     private GameObject player; // the dynamic object we are tracking
-    private float minLowPass = -10; // the lowest the audio will be modulated to
+    private float minLowPass = -4; // the lowest the audio will be modulated to
     private Vector3 soundPos; // the position of the items this is attached to
     public AudioMixer audioMixer; // the audio mixer we are modulating
+    public float pathTotDistance;
 
     [SerializeField]
     private LineRenderer Path;
@@ -43,9 +44,13 @@ public class soundModulationPath : MonoBehaviour
         {
             if(NavMesh.CalculatePath(player.transform.position, transform.position, NavMesh.AllAreas, path))
             {
+                pathTotDistance = 0;
                 Path.positionCount = path.corners.Length;
-                for (int i = 0; i < path.corners.Length; i++)
+                for (int i = 0; i < path.corners.Length; i++) {
                     Path.SetPosition(i, path.corners[i] + Vector3.up * PathHeightOffset);
+                    if (i > 0)
+                        pathTotDistance += Vector3.Distance(path.corners[i - 1], path.corners[i]);
+                }
             }
             else
                 Debug.LogWarning("Failed to calculate path from player to sound source.");
